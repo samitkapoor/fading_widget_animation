@@ -1,3 +1,3 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+- A Flutter package that will let you load your widget in fading animation easily!
