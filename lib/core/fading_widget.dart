@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class FadingWidgetAnimator extends StatefulWidget {
+  //child widget is the only required parameter,
+  //rest of the parameters can be passed as per the choice of developer
+  //default value for duration is 2 seconds
+  //default value for startAfter is 0 seconds i.e. the animation will trigger as soon as the screen loads
+  //default curve is linear
   FadingWidgetAnimator({
     required this.child,
     this.duration = const Duration(seconds: 2),
@@ -10,10 +15,10 @@ class FadingWidgetAnimator extends StatefulWidget {
     super.key,
   });
 
-  //child that we want to animate
+  //child that you want to animate
   Widget child;
 
-  //duration of the fade animation
+  //duration between the widget being fully invisible to fully opaque
   Duration duration;
 
   //the animation will trigger after this much duration
@@ -41,12 +46,14 @@ class _FadingWidgetAnimatorState extends State<FadingWidgetAnimator>
     Future.delayed(widget.startAfter).then((value) {
       animationController?.forward();
     });
+
     super.initState();
   }
 
   @override
   void dispose() {
     animationController?.dispose();
+
     super.dispose();
   }
 
