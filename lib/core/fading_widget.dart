@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class FadingWidgetAnimatior extends StatefulWidget {
-  FadingWidgetAnimatior({
+class FadingWidgetAnimator extends StatefulWidget {
+  FadingWidgetAnimator({
     required this.child,
     this.duration = const Duration(seconds: 2),
+    this.startAfter = const Duration(seconds: 0),
     this.curve = Curves.linear,
     super.key,
   });
@@ -15,14 +16,17 @@ class FadingWidgetAnimatior extends StatefulWidget {
   //duration of the fade animation
   Duration duration;
 
+  //the animation will trigger after this much duration
+  Duration startAfter;
+
   //curve of the animation
   Curve curve;
 
   @override
-  State<FadingWidgetAnimatior> createState() => _FadingWidgetAnimatiorState();
+  State<FadingWidgetAnimator> createState() => _FadingWidgetAnimatorState();
 }
 
-class _FadingWidgetAnimatiorState extends State<FadingWidgetAnimatior>
+class _FadingWidgetAnimatorState extends State<FadingWidgetAnimator>
     with SingleTickerProviderStateMixin {
   AnimationController? animationController;
   Animation? animation;
@@ -34,7 +38,9 @@ class _FadingWidgetAnimatiorState extends State<FadingWidgetAnimatior>
     animation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(parent: animationController!, curve: widget.curve),
     );
-    animationController?.forward();
+    Future.delayed(widget.startAfter).then((value) {
+      animationController?.forward();
+    });
     super.initState();
   }
 
